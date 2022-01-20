@@ -1,0 +1,6 @@
+
+plugins {
+    id "com.android.application"
+}
+
+apply from: "../config/config.gradle"

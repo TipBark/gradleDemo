@@ -1,0 +1,42 @@
+
+apply plugin: 'kotlin-android'
+apply from: "../config/dependencies.gradle"
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.tip.mode1"
+        minSdk 21
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    def android = project.ext.android
+    def test = project.ext.test
+    def androidTest = project.ext.androidTest
+
+    depen(android,getDelegate())
+
+    test.each {k,v -> testImplementation v}
+    androidTest.each {k,v -> androidTestImplementation v}
+}
+
+
+

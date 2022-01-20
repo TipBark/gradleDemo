@@ -1,0 +1,41 @@
+apply from: "../config/version.gradle"
+
+ext {
+    android = [
+        "appcompat":"androidx.appcompat:appcompat:${appcompat}",
+        "constraintlayout":"androidx.constraintlayout:constraintlayout:${constraintlayout}",
+        "androidx.navigation:navigation-ui:${navigation_ui}" : [
+                'androidx.navigation' : 'navigation-runtime',
+                'androidx.customview' : 'customview',
+                'androidx.drawerlayout' : 'drawerlayout',
+                'com.google.android.material' : 'material'
+        ],
+        "navigation_fragment":"androidx.navigation:navigation-fragment:${navigation_fragment}",
+    ]
+
+    test = [
+            "junit":"junit:junit:${junit}"
+    ]
+
+    androidTest = [
+            "ext_junit":"androidx.test.ext:junit:${ext_junit}",
+            "espresso_core":"androidx.test.espresso:espresso-core:${espresso_core}"
+    ]
+}
+
+ext.depen = { android,obj ->
+    android.each { entry ->
+        if(entry.value instanceof Map){
+            obj.api (entry.key){
+                entry.value.each { childEntry ->
+                    exclude(group:childEntry.key)
+                    exclude(module:childEntry.value)
+                }
+            }
+        }else {
+            obj.api entry.value
+        }
+
+    }
+}
+

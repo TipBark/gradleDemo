@@ -1,0 +1,58 @@
+import com.tip.Compile
+import com.tip.Google
+
+plugins {
+    id 'com.android.application'
+    id "com.tip.version"
+}
+
+apply from: "../config/config.gradle"
+
+android {
+    compileSdk Compile.minSdkVersion
+
+    defaultConfig {
+        applicationId "com.tip.mode1"
+        minSdk 21
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main {
+            res.srcDirs(
+                    'src/main/res',
+                    'src/main/res_core',
+                    'src/main/res_user',
+            )
+        }
+    }
+}
+
+dependencies {
+
+    implementation Google.material
+
+    def android = project.ext.android
+    def test = project.ext.test
+    def androidTest = project.ext.androidTest
+
+    depen(android,getDelegate())
+
+    test.each {k,v -> testImplementation v}
+    androidTest.each {k,v -> androidTestImplementation v}
+}

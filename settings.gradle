@@ -1,0 +1,5 @@
+includeBuild("version")
+
+rootProject.name = "gradleDemo"
+include ':app'
+include ':mode1'
